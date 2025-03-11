@@ -2,20 +2,24 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>By korea</title>
-    <subtitle>메뉴 페이지</subtitle>
+    <title>레스토랑 메뉴</title>
     <style>
         body {
             text-align: center;
             background-color: #f9f9f9;
             font-family: Arial, sans-serif;
         }
-        img {
-            max-width: 100%;
-            height: auto;
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
         }
         .tab-container {
-            margin: 20px 0;
+            display: none; /* 초기에는 메뉴 숨김 */
+            margin-top: 20px;
         }
         .tab-button {
             padding: 10px 20px;
@@ -31,45 +35,80 @@
         }
         .menu-image {
             display: none;
+            margin-top: 20px;
         }
         .menu-image.active {
             display: block;
         }
+        .menu-tab {
+            display: none;
+        }
+        .menu-tab.active {
+            display: block;
+        }
+        #menuTab {
+            display: none;
+            margin-top: 20px;
+        }
+        #menuTab button {
+            font-size: 18px;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+        }
+        #menuTab button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
-    <h1>메뉴 페이지</h1>
+    <div class="container">
+        <!-- 메인 화면 -->
+        <div id="mainScreen">
+            <h1>Welcome to Our Restaurant</h1>
+            <p>맛있는 음식을 만나보세요!</p>
+            <button onclick="showMenuTabs()">메뉴 보기</button>
+        </div>
 
-    <div class="tab-container">
-        <button class="tab-button active" onclick="showMenu('lunch')">런치 메뉴</button>
-        <button class="tab-button" onclick="showMenu('dinner')">디너 메뉴</button>
-    </div>
+        <!-- 메뉴 탭 -->
+        <div id="menuTab">
+            <h2>메뉴 선택</h2>
+            <button onclick="showMenu('lunch')">런치</button>
+            <button onclick="showMenu('dinner')">디너</button>
+            <button onclick="showMenu('special')">스페셜 세트</button>
+        </div>
 
-    <div id="lunch" class="menu-image active">
-        <img src="lunch_menu_2.png" alt="런치 메뉴 이미지">
-    </div>
-    
-    <div id="dinner" class="menu-image">
-        <img src="dinner_menu_2.png" alt="디너 메뉴 이미지">
+        <!-- 메뉴 이미지 -->
+        <div class="tab-container">
+            <div id="lunch" class="menu-image">
+                <img src="lunch_menu_2.png" alt="런치 메뉴">
+            </div>
+            <div id="dinner" class="menu-image">
+                <img src="dinner_menu_2.png" alt="디너 메뉴">
+            </div>
+            <div id="special" class="menu-image">
+                <img src="special_menu.png" alt="스페셜 세트 메뉴">
+            </div>
+        </div>
     </div>
 
     <script>
+        function showMenuTabs() {
+            document.getElementById("mainScreen").style.display = "none";
+            document.getElementById("menuTab").style.display = "block";
+        }
+
         function showMenu(menu) {
-            var tabs = document.querySelectorAll('.tab-button');
             var images = document.querySelectorAll('.menu-image');
-            
-            tabs.forEach(function(tab) {
-                tab.classList.remove('active');
-            });
-            
             images.forEach(function(image) {
                 image.classList.remove('active');
             });
 
-            document.querySelector('[onclick="showMenu(\'' + menu + '\')"]').classList.add('active');
             document.getElementById(menu).classList.add('active');
         }
     </script>
-
 </body>
 </html>
