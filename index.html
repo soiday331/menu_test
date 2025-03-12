@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>12/03/2025 test 1-1</title>
+    <title>레스토랑 메뉴</title>
     <style>
         body {
             text-align: center;
@@ -20,61 +20,69 @@
         h1 {
             color: #333;
         }
+        /* 🔹 메뉴 버튼 스타일 변경 */
         .tab-container {
             margin-top: 20px;
         }
         .tab-button {
             padding: 12px 22px;
             margin: 5px;
-            border: none;
-            background-color: #ddd;
-            cursor: pointer;
+            border: 2px solid black;
+            background-color: white;
+            color: black;
             font-size: 18px;
-            transition: background 0.3s;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
         }
-        .tab-button:hover {
-            background-color: #bbb;
-        }
+        .tab-button:hover,
         .tab-button.active {
-            background-color: #4285f4;
+            background-color: black;
             color: white;
         }
+        /* 🔹 메뉴 이미지 스타일 (모바일 최적화) */
         .menu-image {
             display: none;
             margin-top: 20px;
             max-width: 100%;
+            width: 100%;
+            height: auto;
             border-radius: 10px;
         }
         .menu-image.active {
             display: block;
         }
-        #home {
-            display: block;
+        /* 🔹 메뉴 사진 스크롤 가능 + 스크롤 바 표시 */
+        .menu-scroll {
+            overflow-y: auto;
+            max-height: 80vh; /* 화면 높이에 맞게 조정 */
+            scrollbar-width: thin; /* 스크롤 바 스타일 */
+            scrollbar-color: black lightgray;
         }
-        .home-image {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
+        .menu-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .menu-scroll::-webkit-scrollbar-thumb {
+            background-color: black;
             border-radius: 10px;
         }
-        /* 🔹 Back 버튼 (고정 위치) */
+        /* 🔹 Back 버튼 크기 키우기 (모바일 터치 최적화) */
         .back-button {
             display: none;
-            position: fixed; /* 🔥 스크롤해도 고정 */
+            position: fixed;
             top: 15px;
             left: 15px;
-            padding: 18px 24px;
-            font-size: 22px;
-            background-color: transparent;
-            color: #333;
-            border: 2px solid #333;
+            padding: 16px 22px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: black;
+            color: white;
+            border: none;
             cursor: pointer;
-            border-radius: 8px;
-            z-index: 1000; /* 다른 요소 위에 표시 */
+            border-radius: 10px;
+            z-index: 1000;
         }
         .back-button:hover {
-            background-color: #333;
-            color: white;
+            background-color: darkgray;
         }
         @media (max-width: 600px) {
             .tab-button {
@@ -83,8 +91,8 @@
                 margin: 5px 0;
             }
             .back-button {
-                font-size: 19px;
-                padding: 12px 17px;
+                font-size: 22px;
+                padding: 18px 25px;
             }
         }
     </style>
@@ -92,30 +100,32 @@
 <body>
 
     <div class="container">
-        <!-- 🔹 Back 버튼 (왼쪽 상단) -->
+        <!-- 🔹 Back 버튼 (크기 키우기 & 모바일 최적화) -->
         <button id="backButton" class="back-button" onclick="goBack()">Back</button>
 
         <!-- 메인 페이지 -->
         <div id="home">
             <img src="main_image.jpg" alt="레스토랑 메인 이미지" class="home-image">
-            <h1>2025 test desk</h1>
-            <p>test 1-1</p>
+            <h1>Welcome to Our Restaurant</h1>
+            <p>맛있는 음식을 만나보세요!</p>
             <div class="tab-container">
-                <button class="tab-button" onclick="showMenu('lunch')">lunch menu</button>
-                <button class="tab-button" onclick="showMenu('dinner')">dinner munu</button>
-                <button class="tab-button" onclick="showMenu('special')">special menu</button>
+                <button class="tab-button" onclick="showMenu('lunch')">런치 메뉴</button>
+                <button class="tab-button" onclick="showMenu('dinner')">디너 메뉴</button>
+                <button class="tab-button" onclick="showMenu('special')">스페셜 메뉴</button>
             </div>
         </div>
 
-        <!-- 메뉴 이미지 -->
-        <div id="lunch" class="menu-image">
-            <img src="lunch_menu.jpg" alt="lunch menu">
-        </div>
-        <div id="dinner" class="menu-image">
-            <img src="dinner_menu.jpg" alt="dinner menu">
-        </div>
-        <div id="special" class="menu-image">
-            <img src="special_menu.jpg" alt="special menu">
+        <!-- 메뉴 사진을 스크롤 가능하게 -->
+        <div class="menu-scroll">
+            <div id="lunch" class="menu-image">
+                <img src="lunch_menu.jpg" alt="런치 메뉴">
+            </div>
+            <div id="dinner" class="menu-image">
+                <img src="dinner_menu.jpg" alt="디너 메뉴">
+            </div>
+            <div id="special" class="menu-image">
+                <img src="special_menu.jpg" alt="스페셜 메뉴">
+            </div>
         </div>
     </div>
 
