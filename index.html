@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* 🔹 기본적으로 가로 스크롤바 숨김 */
+            overflow-x: hidden;
         }
         .container {
             max-width: 800px;
@@ -49,11 +49,11 @@
             margin: 0 auto;
             border-radius: 10px;
         }
-        /* 🔹 세로로 긴 메뉴 이미지 스타일 */
+        /* 🔹 메뉴 스크롤 설정 */
         .menu-scroll {
             display: none;
             overflow-y: auto;
-            overflow-x: auto; /* 🔹 가로 스크롤 가능 */
+            overflow-x: auto;
             max-height: 90vh;
             white-space: nowrap;
             scrollbar-width: thin;
@@ -67,20 +67,25 @@
             background-color: black;
             border-radius: 10px;
         }
-        /* 🔹 이미지 확대/축소 가능하게 설정 */
-        .menu-image img {
-            display: block;
-            margin: 0 auto;
+        /* 🔹 메뉴 이미지 스타일 */
+        .menu-image {
+            display: none;
+            margin-top: 20px;
             width: 100%;
             min-width: 100%;
             max-width: none;
             height: auto;
             object-fit: contain;
             border-radius: 10px;
-            transition: transform 0.2s ease-in-out; /* 🔹 확대/축소 애니메이션 */
-            cursor: zoom-in;
         }
-        /* 🔹 Back 버튼 크기 키우기 */
+        .menu-image.active {
+            display: block;
+        }
+        /* 🔹 줌 가능하도록 설정 */
+        .zoomable {
+            transition: transform 0.2s ease-in-out;
+        }
+        /* 🔹 Back 버튼 */
         .back-button {
             display: none;
             position: fixed;
@@ -149,12 +154,14 @@
             document.getElementById("home").style.display = "none"; // 메인 화면 숨기기
             document.getElementById("backButton").style.display = "block"; // Back 버튼 보이기
             document.getElementById("menuContainer").style.display = "block"; // 메뉴 컨테이너 보이기
-            
+
+            // 모든 메뉴 이미지 숨기기
             var images = document.querySelectorAll('.menu-image');
             images.forEach(function(image) {
                 image.classList.remove('active');
             });
 
+            // 선택한 메뉴만 표시
             document.getElementById(menu).classList.add('active');
         }
 
@@ -169,18 +176,29 @@
             });
         }
 
-        // 🔹 이미지 확대/축소 기능 추가
+        // 🔹 PC에서는 줌 기능 비활성화, 모바일에서는 유지
         document.querySelectorAll(".zoomable").forEach(img => {
-            let scale = 1; // 기본 배율
+            let scale = 1;
+            
+            // 모바일 터치 줌 지원
+            img.addEventListener("touchstart", function(event) {
+                if (event.touches.length === 2) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
+
+            // 마우스 휠 줌 비활성화 (PC에서만 적용)
             img.addEventListener("wheel", function(event) {
+                if (window.innerWidth > 800) return; // PC에서는 줌 비활성화
+
                 event.preventDefault();
                 if (event.deltaY < 0) {
-                    scale += 0.1; // 확대
+                    scale += 0.1;
                 } else {
-                    scale -= 0.1; // 축소
+                    scale -= 0.1;
                 }
-                if (scale < 1) scale = 1; // 최소 크기 제한
-                if (scale > 3) scale = 3; // 최대 크기 제한
+                if (scale < 1) scale = 1;
+                if (scale > 3) scale = 3;
                 img.style.transform = `scale(${scale})`;
             });
 
