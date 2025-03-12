@@ -15,6 +15,7 @@
             max-width: 800px;
             margin: auto;
             padding: 20px;
+            position: relative;
         }
         h1 {
             color: #333;
@@ -56,19 +57,23 @@
             object-fit: cover;
             border-radius: 10px;
         }
+        /* 🔹 Back 버튼 스타일 */
         .back-button {
             display: none;
-            margin-top: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             padding: 10px 15px;
             font-size: 16px;
-            background-color: #333;
-            color: white;
-            border: none;
+            background-color: transparent;
+            color: #333;
+            border: 2px solid #333;
             cursor: pointer;
             border-radius: 5px;
         }
         .back-button:hover {
-            background-color: #555;
+            background-color: #333;
+            color: white;
         }
         @media (max-width: 600px) {
             .tab-button {
@@ -82,11 +87,14 @@
 <body>
 
     <div class="container">
+        <!-- 🔹 Back 버튼 (왼쪽 상단) -->
+        <button id="backButton" class="back-button" onclick="goBack()">Back</button>
+
         <!-- 메인 페이지 -->
         <div id="home">
             <img src="main_image.jpg" alt="레스토랑 메인 이미지" class="home-image">
             <h1>Welcome to Our Restaurant</h1>
-            <p>맛있는 음식을 만나보세요!</p>
+            <p>메뉴 테스트</p>
             <div class="tab-container">
                 <button class="tab-button" onclick="showMenu('lunch')">런치 메뉴</button>
                 <button class="tab-button" onclick="showMenu('dinner')">디너 메뉴</button>
@@ -104,15 +112,12 @@
         <div id="special" class="menu-image">
             <img src="special_menu.png" alt="스페셜 메뉴">
         </div>
-
-        <!-- 뒤로 가기 버튼 -->
-        <button id="backButton" class="back-button" onclick="goBack()">뒤로 가기</button>
     </div>
 
     <script>
         function showMenu(menu) {
             document.getElementById("home").style.display = "none"; // 메인 화면 숨기기
-            document.getElementById("backButton").style.display = "block"; // 뒤로가기 버튼 보이기
+            document.getElementById("backButton").style.display = "block"; // Back 버튼 보이기
             
             var images = document.querySelectorAll('.menu-image');
             images.forEach(function(image) {
@@ -124,7 +129,7 @@
 
         function goBack() {
             document.getElementById("home").style.display = "block"; // 메인 화면 보이기
-            document.getElementById("backButton").style.display = "none"; // 뒤로가기 버튼 숨기기
+            document.getElementById("backButton").style.display = "none"; // Back 버튼 숨기기
 
             var images = document.querySelectorAll('.menu-image');
             images.forEach(function(image) {
