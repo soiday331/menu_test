@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* 🔹 가로 스크롤 제거 */
+            overflow-x: hidden; /* 🔹 기본적으로 가로 스크롤바 숨김 */
         }
         .container {
             max-width: 800px;
@@ -46,37 +46,39 @@
             width: 100%;
             max-width: 800px;
             height: auto;
-            margin: 0 auto; /* 중앙 정렬 */
+            margin: 0 auto;
             border-radius: 10px;
         }
-        /* 🔹 세로로 긴 메뉴 이미지 중앙 정렬 */
-        .menu-image {
-            display: none;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto; /* 중앙 정렬 */
-        }
-        .menu-image.active {
-            display: block;
-        }
-        /* 🔹 메뉴 사진 스크롤 가능 + 가로 스크롤 제거 */
+        /* 🔹 세로로 긴 메뉴 이미지 스타일 */
         .menu-scroll {
             overflow-y: auto;
-            overflow-x: hidden;
+            overflow-x: auto; /* 🔹 가로 스크롤 기능 추가 */
             max-height: 90vh;
+            white-space: nowrap; /* 🔹 가로로 넘칠 경우 줄 바꿈 방지 */
             scrollbar-width: thin;
             scrollbar-color: black lightgray;
         }
         .menu-scroll::-webkit-scrollbar {
             width: 8px;
+            height: 8px; /* 🔹 가로 스크롤바 활성화 */
         }
         .menu-scroll::-webkit-scrollbar-thumb {
             background-color: black;
             border-radius: 10px;
+        }
+        /* 🔹 이미지가 가로로 잘리지 않도록 설정 */
+        .menu-image {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            min-width: 100%; /* 🔹 가로 너비 유지 */
+            max-width: none;
+            height: auto;
+            object-fit: contain; /* 🔹 이미지 비율 유지하며 꽉 차게 */
+            border-radius: 10px;
+        }
+        .menu-image.active {
+            display: block;
         }
         /* 🔹 Back 버튼 크기 키우기 */
         .back-button {
