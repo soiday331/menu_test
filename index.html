@@ -51,34 +51,34 @@
         }
         /* 🔹 세로로 긴 메뉴 이미지 스타일 */
         .menu-scroll {
+            display: none;
             overflow-y: auto;
-            overflow-x: auto; /* 🔹 가로 스크롤 기능 추가 */
+            overflow-x: auto; /* 🔹 가로 스크롤 가능 */
             max-height: 90vh;
-            white-space: nowrap; /* 🔹 가로로 넘칠 경우 줄 바꿈 방지 */
+            white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: black lightgray;
         }
         .menu-scroll::-webkit-scrollbar {
             width: 8px;
-            height: 8px; /* 🔹 가로 스크롤바 활성화 */
+            height: 8px;
         }
         .menu-scroll::-webkit-scrollbar-thumb {
             background-color: black;
             border-radius: 10px;
         }
-        /* 🔹 이미지가 가로로 잘리지 않도록 설정 */
-        .menu-image {
-            display: none;
-            margin-top: 20px;
+        /* 🔹 이미지 확대/축소 가능하게 설정 */
+        .menu-image img {
+            display: block;
+            margin: 0 auto;
             width: 100%;
-            min-width: 100%; /* 🔹 가로 너비 유지 */
+            min-width: 100%;
             max-width: none;
             height: auto;
-            object-fit: contain; /* 🔹 이미지 비율 유지하며 꽉 차게 */
+            object-fit: contain;
             border-radius: 10px;
-        }
-        .menu-image.active {
-            display: block;
+            transition: transform 0.2s ease-in-out; /* 🔹 확대/축소 애니메이션 */
+            cursor: zoom-in;
         }
         /* 🔹 Back 버튼 크기 키우기 */
         .back-button {
@@ -131,15 +131,15 @@
         </div>
 
         <!-- 메뉴 사진을 스크롤 가능하게 -->
-        <div class="menu-scroll">
+        <div id="menuContainer" class="menu-scroll">
             <div id="lunch" class="menu-image">
-                <img src="lunch_menu.jpg" alt="런치 메뉴">
+                <img src="lunch_menu.jpg" alt="런치 메뉴" class="zoomable">
             </div>
             <div id="dinner" class="menu-image">
-                <img src="dinner_menu.jpg" alt="디너 메뉴">
+                <img src="dinner_menu.jpg" alt="디너 메뉴" class="zoomable">
             </div>
             <div id="special" class="menu-image">
-                <img src="special_menu.jpg" alt="스페셜 메뉴">
+                <img src="special_menu.jpg" alt="스페셜 메뉴" class="zoomable">
             </div>
         </div>
     </div>
@@ -148,6 +148,7 @@
         function showMenu(menu) {
             document.getElementById("home").style.display = "none"; // 메인 화면 숨기기
             document.getElementById("backButton").style.display = "block"; // Back 버튼 보이기
+            document.getElementById("menuContainer").style.display = "block"; // 메뉴 컨테이너 보이기
             
             var images = document.querySelectorAll('.menu-image');
             images.forEach(function(image) {
@@ -160,12 +161,35 @@
         function goBack() {
             document.getElementById("home").style.display = "block"; // 메인 화면 보이기
             document.getElementById("backButton").style.display = "none"; // Back 버튼 숨기기
+            document.getElementById("menuContainer").style.display = "none"; // 메뉴 컨테이너 숨기기
 
             var images = document.querySelectorAll('.menu-image');
             images.forEach(function(image) {
                 image.classList.remove('active');
             });
         }
+
+        // 🔹 이미지 확대/축소 기능 추가
+        document.querySelectorAll(".zoomable").forEach(img => {
+            let scale = 1; // 기본 배율
+            img.addEventListener("wheel", function(event) {
+                event.preventDefault();
+                if (event.deltaY < 0) {
+                    scale += 0.1; // 확대
+                } else {
+                    scale -= 0.1; // 축소
+                }
+                if (scale < 1) scale = 1; // 최소 크기 제한
+                if (scale > 3) scale = 3; // 최대 크기 제한
+                img.style.transform = `scale(${scale})`;
+            });
+
+            // 🔹 더블 클릭 시 원래 크기로 복구
+            img.addEventListener("dblclick", function() {
+                scale = 1;
+                img.style.transform = "scale(1)";
+            });
+        });
     </script>
 
 </body>
