@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <title>레스토랑 메뉴</title>
     <style>
-        /* 🔹 전체 페이지 설정 (가로 스크롤 방지 & 화면 꽉 차게) */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
+        body {
+            text-align: center;
             background-color: #f9f9f9;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* 🔹 가로 스크롤바 제거 */
         }
         .container {
             max-width: 800px;
@@ -23,7 +21,7 @@
         h1 {
             color: #333;
         }
-        /* 🔹 메뉴 버튼 스타일 */
+        /* 🔹 메뉴 버튼 스타일 변경 */
         .tab-container {
             margin-top: 20px;
         }
@@ -42,7 +40,7 @@
             background-color: black;
             color: white;
         }
-        /* 🔹 메인 이미지 중앙 정렬 */
+        /* 🔹 메인 이미지 중앙 정렬 (데스크톱 & 모바일) */
         .home-image {
             display: block;
             width: 100%;
@@ -51,35 +49,36 @@
             margin: 0 auto;
             border-radius: 10px;
         }
-        /* 🔹 메뉴 이미지 (처음엔 숨겨짐) */
-        .menu-container {
-            display: none; /* 🔥 처음에는 숨김 */
-            width: 100vw;
-            height: 100vh;
-            overflow-y: auto; /* 세로 스크롤 가능 */
-            overflow-x: hidden; /* 가로 스크롤 방지 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 20px 0;
-        }
+        /* 🔹 세로로 긴 메뉴 이미지 스타일 */
         .menu-image {
-            max-width: 100%;
-            height: auto; /* 세로로 긴 이미지 지원 */
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            height: auto; /* 세로 길이 자유롭게 확장 가능 */
+            border-radius: 10px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .menu-container.active {
-            display: flex;
+        .menu-image.active {
+            display: block;
         }
-        /* 🔹 스크롤 바 스타일 */
-        .menu-container::-webkit-scrollbar {
+        /* 🔹 메뉴 사진 스크롤 가능 + 가로 스크롤 제거 */
+        .menu-scroll {
+            overflow-y: auto;
+            overflow-x: hidden; /* 🔹 가로 스크롤 없애기 */
+            max-height: 90vh; /* 세로로 긴 메뉴판을 위한 공간 확보 */
+            scrollbar-width: thin;
+            scrollbar-color: black lightgray;
+        }
+        .menu-scroll::-webkit-scrollbar {
             width: 8px;
         }
-        .menu-container::-webkit-scrollbar-thumb {
+        .menu-scroll::-webkit-scrollbar-thumb {
             background-color: black;
             border-radius: 10px;
         }
-        /* 🔹 Back 버튼 (크기 키우기 & 모바일 최적화) */
+        /* 🔹 Back 버튼 크기 키우기 (모바일 터치 최적화) */
         .back-button {
             display: none;
             position: fixed;
@@ -129,15 +128,17 @@
             </div>
         </div>
 
-        <!-- 메뉴 이미지 (처음에는 숨김) -->
-        <div id="lunch" class="menu-container">
-            <img src="lunch_menu.jpg" alt="런치 메뉴" class="menu-image">
-        </div>
-        <div id="dinner" class="menu-container">
-            <img src="dinner_menu.jpg" alt="디너 메뉴" class="menu-image">
-        </div>
-        <div id="special" class="menu-container">
-            <img src="special_menu.jpg" alt="스페셜 메뉴" class="menu-image">
+        <!-- 메뉴 사진을 스크롤 가능하게 -->
+        <div class="menu-scroll">
+            <div id="lunch" class="menu-image">
+                <img src="lunch_menu.jpg" alt="런치 메뉴">
+            </div>
+            <div id="dinner" class="menu-image">
+                <img src="dinner_menu.jpg" alt="디너 메뉴">
+            </div>
+            <div id="special" class="menu-image">
+                <img src="special_menu.jpg" alt="스페셜 메뉴">
+            </div>
         </div>
     </div>
 
@@ -145,25 +146,22 @@
         function showMenu(menu) {
             document.getElementById("home").style.display = "none"; // 메인 화면 숨기기
             document.getElementById("backButton").style.display = "block"; // Back 버튼 보이기
-
-            var menus = document.querySelectorAll('.menu-container');
-            menus.forEach(function(menuContainer) {
-                menuContainer.classList.remove('active');
-                menuContainer.style.display = "none"; // 모든 메뉴 숨기기
+            
+            var images = document.querySelectorAll('.menu-image');
+            images.forEach(function(image) {
+                image.classList.remove('active');
             });
 
             document.getElementById(menu).classList.add('active');
-            document.getElementById(menu).style.display = "flex"; // 선택한 메뉴 보이기
         }
 
         function goBack() {
             document.getElementById("home").style.display = "block"; // 메인 화면 보이기
             document.getElementById("backButton").style.display = "none"; // Back 버튼 숨기기
 
-            var menus = document.querySelectorAll('.menu-container');
-            menus.forEach(function(menuContainer) {
-                menuContainer.classList.remove('active');
-                menuContainer.style.display = "none"; // 모든 메뉴 숨기기
+            var images = document.querySelectorAll('.menu-image');
+            images.forEach(function(image) {
+                image.classList.remove('active');
             });
         }
     </script>
