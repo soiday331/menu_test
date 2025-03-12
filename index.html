@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* 🔹 가로 스크롤바 제거 */
+            overflow-x: hidden; /* 🔹 가로 스크롤 제거 */
         }
         .container {
             max-width: 800px;
@@ -21,7 +21,7 @@
         h1 {
             color: #333;
         }
-        /* 🔹 메뉴 버튼 스타일 변경 */
+        /* 🔹 메뉴 버튼 스타일 */
         .tab-container {
             margin-top: 20px;
         }
@@ -40,25 +40,25 @@
             background-color: black;
             color: white;
         }
-        /* 🔹 메인 이미지 중앙 정렬 (데스크톱 & 모바일) */
+        /* 🔹 메인 이미지 중앙 정렬 */
         .home-image {
             display: block;
             width: 100%;
             max-width: 800px;
             height: auto;
-            margin: 0 auto;
+            margin: 0 auto; /* 중앙 정렬 */
             border-radius: 10px;
         }
-        /* 🔹 세로로 긴 메뉴 이미지 스타일 */
+        /* 🔹 세로로 긴 메뉴 이미지 중앙 정렬 */
         .menu-image {
             display: none;
             margin-top: 20px;
             width: 100%;
             max-width: 800px;
-            height: auto; /* 세로 길이 자유롭게 확장 가능 */
+            height: auto;
             border-radius: 10px;
-            margin-left: auto;
-            margin-right: auto;
+            display: block;
+            margin: 0 auto; /* 중앙 정렬 */
         }
         .menu-image.active {
             display: block;
@@ -66,8 +66,8 @@
         /* 🔹 메뉴 사진 스크롤 가능 + 가로 스크롤 제거 */
         .menu-scroll {
             overflow-y: auto;
-            overflow-x: hidden; /* 🔹 가로 스크롤 없애기 */
-            max-height: 90vh; /* 세로로 긴 메뉴판을 위한 공간 확보 */
+            overflow-x: hidden;
+            max-height: 90vh;
             scrollbar-width: thin;
             scrollbar-color: black lightgray;
         }
@@ -78,7 +78,7 @@
             background-color: black;
             border-radius: 10px;
         }
-        /* 🔹 Back 버튼 크기 키우기 (모바일 터치 최적화) */
+        /* 🔹 Back 버튼 크기 키우기 */
         .back-button {
             display: none;
             position: fixed;
@@ -113,7 +113,7 @@
 <body>
 
     <div class="container">
-        <!-- 🔹 Back 버튼 (크기 키우기 & 모바일 최적화) -->
+        <!-- 🔹 Back 버튼 -->
         <button id="backButton" class="back-button" onclick="goBack()">Back</button>
 
         <!-- 메인 페이지 -->
