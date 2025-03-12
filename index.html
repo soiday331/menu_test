@@ -39,14 +39,25 @@
             background-color: black;
             color: white;
         }
-        /* 🔹 메뉴 이미지 스타일 (모바일 최적화) */
+        /* 🔹 메인 이미지 중앙 정렬 (데스크톱 & 모바일) */
+        .home-image {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+        /* 🔹 세로로 긴 메뉴 이미지 스타일 */
         .menu-image {
             display: none;
             margin-top: 20px;
-            max-width: 100%;
             width: 100%;
-            height: auto;
+            max-width: 800px;
+            height: auto; /* 세로 길이 자유롭게 확장 가능 */
             border-radius: 10px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .menu-image.active {
             display: block;
@@ -54,8 +65,8 @@
         /* 🔹 메뉴 사진 스크롤 가능 + 스크롤 바 표시 */
         .menu-scroll {
             overflow-y: auto;
-            max-height: 80vh; /* 화면 높이에 맞게 조정 */
-            scrollbar-width: thin; /* 스크롤 바 스타일 */
+            max-height: 90vh; /* 세로로 긴 메뉴판을 위한 공간 확보 */
+            scrollbar-width: thin;
             scrollbar-color: black lightgray;
         }
         .menu-scroll::-webkit-scrollbar {
